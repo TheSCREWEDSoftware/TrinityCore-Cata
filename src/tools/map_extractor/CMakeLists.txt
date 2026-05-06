@@ -21,6 +21,14 @@ add_executable(mapextractor
   ${PRIVATE_SOURCES}
 )
 
+if(WIN32)
+  add_custom_command(TARGET mapextractor
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+      ${CMAKE_SOURCE_DIR}/src/tools/extractorWindows.bat
+      $<TARGET_FILE_DIR:mapextractor>/extractorWindows.bat)
+endif()
+
 target_link_libraries(mapextractor
   PRIVATE
     trinity-core-interface
